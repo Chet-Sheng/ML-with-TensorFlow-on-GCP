@@ -1,7 +1,8 @@
-\section{Module 1}
-sadf asd f
-\includepdf[pages=-]{figures/Module1.pdf}[H]
-asdf sad f
+\chapter{Intro to Specilization}
+
+%sadf asd f
+%\includepdf[pages=-]{figures/Module1.pdf}[H]
+%asdf sad f
 
 %\begin{figure}[h]
 %	\centering
@@ -9,9 +10,44 @@ asdf sad f
 %	\caption{Schematical view of Spearman's theory.}
 %\end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.55\textwidth]{figures/Module-1-Serving.pdf}
+	\caption{ML Flow Chart}
+\end{figure}
+
+
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figures/Module1.pdf}
-	\caption{LSTM unfolded through time steps}
+	\caption{ML hierarchy}
 \end{figure}
+
+
+
+One way to reduce the chances of “training-serving skew” is to take the same code that was used to process historical data (during training) and reuse it during predictions. But for that to happen, your data pipelines have to process both batch and stream.
+
+This is a key insight behind Cloud Dataflow, a way to author data pipelines in Python, Java or even visually with Cloud Dataprep.
+
+It’s open-sourced as Apache Beam. Where the B stands for batch and -eam stands for stream. \underline{A single system to do both batch and stream}, because
+In machine learning, it is helpful to use the same system in both training and
+prediction.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/Module1-PerformanceMetric(TrainTest).png}
+	\caption{ML hierarchy}
+\end{figure}
+
+
+
+The performance metrics you care about change between training and predictions as well.
+
+During training, the key performance aspect you care about is scaling to a lot of data. Distributed training, if you will.
+
+During prediction, though, the key performance aspect is speed of response (high QPS).
+
+This is a key insight behind TensorFlow. Lots of machine learning frameworks exist, for training. Not so many are equally capable of operationalization.
+
+

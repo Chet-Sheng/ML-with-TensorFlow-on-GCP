@@ -1,4 +1,47 @@
 \chapter{Launching into Machine Learning}
-ddd
+\section{Supervised Learning}
+\subsection{Linear Regression}
+Linear regression有closed form solution. 或者也可以用gradient descent.
 
-hhh
+\subsubsection{Closed Form Solution}
+However, closed form solution is not practical for large dataset.
+\[ W=(X^T X)^{-1} X^T Y \]
+\begin{itemize}
+	\item $ X^T X $首先就要是non-singular matrix. ie.行列都要是linear independent的.不然不能inverse.
+	\item 计算复杂度也很高，$ O(n^3) $.
+\end{itemize}
+
+\subsubsection{Gradient Descent}
+\begin{itemize}
+	\item less expensive computationally in both time and memory;
+	\item more amenable to model generalization;
+	\item generic enough to work on most problems.
+\end{itemize}
+
+\subsection{Neural Networks}
+\subsubsection{Actication Functions}
+\begin{itemize}
+	\item Sigmoid/Tanh: gradient descent halt/ slow down when its value close to 1 or -1.
+	\item ReLu: it is non-linear, so we can get the complex modeling needed.\\
+	It doesn't have the saturation in non-negative portion of input space.\\
+	However, the negative portion of input space translating to a zero activation, ReLu layers could end up dying or no long er activating, which can also cause traning to slow or stop.
+	\item ELU: Solve the ReLU problem, but computational expensive to calculate exponential.
+	
+\end{itemize}
+When we need a probability as the output of a model, the activation function of the last layer should be sigmoid: 
+\begin{itemize}
+	\item  Beyond just the range, the sigmoid(logistic) function is the cumulative distribution function(CDF) of the logistic probability distribution.\\
+	Quantile function of logistic probability distribution (the inverse of CDF) is a generalization of the logit function\footnote{logit: \url{https://en.wikipedia.org/wiki/Logit}}, which models the log odds when the function's variable represents a probability $ p $.\\
+	This is why it can be used as a true probability.\\
+	(卧槽，这玩意儿解决了我的一个万年疑问啊！怎么感觉还是不是特别清楚，还是要看看怎么定义的概率)
+	\item  Tanh is incorrect, because even though it is a squashing function like a sigmoid, its range ranges between negative one to one which is not the same range as the probability. \\
+	Furthermore, just squashing tanh into a sigmoid will not magically turn it into a probability because it doesn't have the same properties mentioned above that allows a sigmoid output to be interpreted as a probability.\\
+	To correctly convert into a sigmoid:
+	\begin{itemize}
+		\item first you have to add one and divide by two to get the correct range.
+		\item Also, to get the right spread, you'd have to divide tanh argument by two. 
+	\end{itemize} 
+	But you've already calculated tanh, so we will pinned a bunch of work, and you may as well have just used a sigmoid to start.
+\end{itemize}
+
+ 

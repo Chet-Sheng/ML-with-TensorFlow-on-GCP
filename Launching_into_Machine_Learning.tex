@@ -1,6 +1,28 @@
 \chapter{Launching into Machine Learning}
 \section{Supervised Learning}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/MLShortHistory}
+	\caption{ML Short History}
+\end{figure}
+
 \subsection{Linear Regression}
+
+他有个数据可视化的分析方法也挺好的，就是数据量太大的时候scatter plot就不合适了，他用了画quantile的方法，在两坐标轴不变的情况下，让图像更加可视化。卧槽，好思路啊！我惊呆了。
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/BabyWeight-vs-MotherAge(Scatter)}
+	\caption{Scatter Plot}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/BabyWeight-vs-MotherAge(Quantile)}
+	\caption{Quantile Plot}
+\end{figure}
+
+
+
 Linear regression有closed form solution. 或者也可以用gradient descent.
 
 \subsubsection{Closed Form Solution}
@@ -10,6 +32,8 @@ However, closed form solution is not practical for large dataset.
 	\item $ X^T X $首先就要是non-singular matrix. ie.行列都要是linear independent的.不然不能inverse.
 	\item 计算复杂度也很高，$ O(n^3) $.
 \end{itemize}
+数据量太大的时候Analytical solution(上面提到的)become impractical. 我们就会改用 Gradient Descent的方法。
+
 
 \subsubsection{Gradient Descent}
 \begin{itemize}
@@ -44,4 +68,56 @@ When we need a probability as the output of a model, the activation function of 
 	But you've already calculated tanh, so we will pinned a bunch of work, and you may as well have just used a sigmoid to start.
 \end{itemize}
 
+
+\subsection{Decision Tree}
+each node is  a linear classifier for one feature.
+
+\subsection{Support Vector Machine(SVM)} 
+maximise the margin between two support vectors, and minimize the hinge loss.
  
+ In case of having more than 2 classes, a one vs all approach should be taken and then choose the best out of the promoted binary classification.
+ 
+ In case of features non-linear separable, we apply kernel transformation which maps the data from our input vector space to a vector space that now has features that can be linearly separated as shown in the diagram. 
+ kernel transformation 类似神经网络的激活函数把input变成transform space, output dimension is decided by number of neurons in the layer. The activation function changes the basis of the vector space but doesn't addor subtract dimensions.  
+ 
+ Kernelized SVMs tend to provide sparser solutions and thus have better scalability. 
+ SVMs perform better when there is a high number of dimensions and when the predictors nearly certainly predict the response.
+ 
+ \subsection{Random forest}
+ 	blend performance across many models, and we call this ensemble method.
+ 	eg. if errors are independent for a number of simple weak learners, combined, they would form a strong learner.
+ 	DNN approximate this by using dropout layers, which help regularize the model and prevent overfitting. This can be simulated by randomly turning off neurons in the network with some probabilities for each forward pass, which will essentially be creating a new network each time.
+ 
+\subsection{DNN}
+ 	Back again in the timeline are neural networks, now with even more of an advantage through leaps and computational power and lots and lots of data. DNNs began to substantially outperform other methods on test such as computer vision. In addition to the boom from boosted hardware, there are many new tricks and architectures that help to improve trainability of deep neural networks like ReLUs, better initialization methods, CNNs or convolutional neural networks and dropout. 
+ 	We talked about some of these tricks from other ML methods. The use of nonlinear activation functions such as ReLUs, which usually are set as the default now, we talked about during the first look at neural networks. 
+ 	Dropout layers began being used to help with generalization, which works like ensemble methods, which we explored when talking about random forests and boosted trees. 
+ 	Convolutional layers were added that reduced the computational and memory load due to their non-complete connectedness, as well as being able to focus on local aspects, for instance, images, rather than comparing unrelated things in an image. 
+ 	
+ 	In other words, all the advances that came about in other ML methods, got folded back into neural networks. Let's look at an example of the deep neural network
+ 	
+\section{Optimisation}
+\subsection{Loss function}
+loss functon，作用是measure the quality of a group of predictions on training data (sum of a group of prediction error).
+
+linear regression不仅可以用作regression，还可以做classification,有个东西叫做decision boundry，就像svm一样画条线分开。。。
+
+然后loss function for linear regression我们就用RMSE (Root Mean Square Error\footnote{RMSE: 之所以要加Root是因为计量单位问题}).
+
+但是for classification, 我们就不再用RMSE了，除了deeplearning里面提到的问题，还有几个问题：
+\begin{itemize}
+	\item The problem is, it fails to capture our intuitive belief that	predictions that are really bad should be penalized much more strongly. Note how a prediction of one, when the target is zero, is about three times worse than a prediction of point five for the same target.
+	\item Cross-Entropy Loss penalize bad prediction very strongly.
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/RMSE-for-Classification}
+	\caption{RMSE for Classification}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{figures/CrossEntropyLoss-for-Classification}
+	\caption{Cross-Entropy Loss for Classification}
+\end{figure}
+
+
